@@ -1,4 +1,5 @@
 const path = require('path');
+const projectRoot = path.resolve(path.dirname(__filename), '../..');
 
 module.exports = function () {
     return {
@@ -14,11 +15,14 @@ module.exports = function () {
                 if (calleeIsRequire && isRelativeModulePath) {
                     var fromPath = _path.hub.file.log.filename.split(path.win32.sep).join(path.posix.sep);
                     var targetPath = modulePath.value;
-                    var relativePath = path.posix.resolve(path.dirname(fromPath), targetPath);
-                    console.log({fromPath, targetPath, relativePath});
-                    modulePath.value = relativePath;
+                    var cloudModulePath = path.posix.join(path.posix.dirname(fromPath), targetPath).split(path.posix.sep);;
+                    cloudModulePath.splice(0, 1, 'cloud');
+                    cloudModulePath = cloudModulePath.join(path.posix.sep);
+                    console.log(JSON.stringify({fromPath, targetPath, cloudModulePath}));
+                    modulePath.value = cloudModulePath;
                 }
             }
         }
     };
+
 };
